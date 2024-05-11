@@ -45,8 +45,5 @@
     "unbuild": "^2.0.0",
     "vitest": "^1.4.0"
   },
-  "packageManager": "pnpm@8.12.1",
-  "dependencies": {
-    "iconv-lite": "^0.6.3"
-  }
+  "packageManager": "pnpm@8.12.1"
 }
