@@ -14,25 +14,34 @@ const testCases = [
   "✊🏿✊🏿✊🏿👶👶👶🏿👶🏿🏋️‍♀️🏋️‍♀️🏋️‍♀️",
   // special cases
   "𐐀",
-  '',
-  'ascii',
-  'latin \u00A9 1',
-  'two \uCCCC byte',
-  'surrogate \uD800\uDC000 pair',
-  'isolated \uD800 leading',
-  'isolated \uDC00 trailing',
-  '\uD800 isolated leading at beginning',
-  '\uDC00 isolated trailing at beginning',
-  'isolated leading at end \uD800',
-  'isolated trailing at end \uDC00',
-  'swapped surrogate \uDC00\uD800 pair'
+  "",
+  "ascii",
+  "latin \u00A9 1",
+  "two \uCCCC byte",
+  "surrogate \uD800\uDC000 pair",
+  "isolated \uD800 leading",
+  "isolated \uDC00 trailing",
+  "\uD800 isolated leading at beginning",
+  "\uDC00 isolated trailing at beginning",
+  "isolated leading at end \uD800",
+  "isolated trailing at end \uDC00",
+  "swapped surrogate \uDC00\uD800 pair",
+  // invalid
+  "trailing high byte \u00A9",
+  "interstitial high \u00A9 byte",
+  "invalid \u00C0 byte",
+  "invalid three-byte \u00ED\u00D0\u0080",
+  "surrogate \u00ED\u00A0\u0080\u00ED\u00B0\u0080 pair",
 ];
 
 const invalidTestCases = [
   [0x54, 0x78, 0x01, 0xb5, 0xcf, 0x03, 0x8c],
   [0xe8, 0x82, 0xda, 0x46, 0x5c, 0xdb, 0xb6],
-  [0x61, 0xf1, 0x80, 0x80, 0xe1, 0x80, 0xc2, 0x62, 0x80, 0x63, 0x80, 0xbf, 0x64],
-]
+  [
+    0x61, 0xf1, 0x80, 0x80, 0xe1, 0x80, 0xc2, 0x62, 0x80, 0x63, 0x80, 0xbf,
+    0x64,
+  ],
+];
 
 describe("utf8 decoder", () => {
   it("decode basic case", () => {
