@@ -1,13 +1,23 @@
-# packageName
+# utf8-decoder
 
 <!-- automd:badges color=yellow -->
 
-[![npm version](https://flat.badgen.net/npm/v/packageName?color=yellow)](https://npmjs.com/package/packageName)
-[![npm downloads](https://flat.badgen.net/npm/dm/packageName?color=yellow)](https://npmjs.com/package/packageName)
+[![npm version](https://img.shields.io/npm/v/utf8-decoder?color=yellow)](https://npmjs.com/package/utf8-decoder)
+[![npm downloads](https://img.shields.io/npm/dm/utf8-decoder?color=yellow)](https://npmjs.com/package/utf8-decoder)
 
 <!-- /automd -->
 
-This is my package description.
+A simple UTF-8 decoder, keeping align with native TextDecoder as much as possible.
+
+Most part of the code is using V8's Utf8DfaDecoder, which is a modified version of [Flexible and Economical UTF-8 Decoder](http://bjoern.hoehrmann.de/utf-8/decoder/dfa/).
+
+- Handle malformed UTF-8 better than most solutions in StackOverflow.
+- Keeps default char unicode `�` as-is instead of throwing error.
+- Process surrogate pairs correctly for Emojis.
+- Designed with performance in mind.
+
+You can try over the test case for other UTF-8 decoders to see the difference, especially the malformed cases.
+
 
 ## Usage
 
@@ -17,43 +27,43 @@ Install package:
 
 ```sh
 # ✨ Auto-detect
-npx nypm install packageName
+npx nypm install utf8-decoder
 
 # npm
-npm install packageName
+npm install utf8-decoder
 
 # yarn
-yarn add packageName
+yarn add utf8-decoder
 
 # pnpm
-pnpm install packageName
+pnpm install utf8-decoder
 
 # bun
-bun install packageName
+bun install utf8-decoder
 ```
 
 <!-- /automd -->
 
 Import:
 
-<!-- automd:jsimport cjs cdn name="pkg" -->
+<!-- automd:jsimport cjs cdn name="utf8-decoder" imports="decode" -->
 
 **ESM** (Node.js, Bun)
 
 ```js
-import {} from "pkg";
+import { decode } from "utf8-decoder";
 ```
 
 **CommonJS** (Legacy Node.js)
 
 ```js
-const {} = require("pkg");
+const { decode } = require("utf8-decoder");
 ```
 
 **CDN** (Deno, Bun and Browsers)
 
 ```js
-import {} from "https://esm.sh/pkg";
+import { decode } from "https://esm.sh/utf8-decoder";
 ```
 
 <!-- /automd -->
@@ -72,15 +82,23 @@ import {} from "https://esm.sh/pkg";
 
 </details>
 
+## Reference
+
+Unicode/UTF-8 is a complex topic, here are some references for further reading:
+- [UTF-8 Encoding](https://en.wikipedia.org/wiki/UTF-8)
+- [The Unicode Standard](https://www.unicode.org/versions/Unicode6.0.0/)
+
+I recommend reading the chapter 3 of the Unicode Standard for a better understanding of the encoding and the invalid sequences and error handling.
+
 ## License
 
 <!-- automd:contributors license=MIT -->
 
-Published under the [MIT](https://github.com/unjs/packageName/blob/main/LICENSE) license.
-Made by [community](https://github.com/unjs/packageName/graphs/contributors) 💛
+Published under the [MIT](https://github.com/Cubelrti/utf8-decoder/blob/main/LICENSE) license.
+Made by [community](https://github.com/Cubelrti/utf8-decoder/graphs/contributors) 💛
 <br><br>
-<a href="https://github.com/unjs/packageName/graphs/contributors">
-<img src="https://contrib.rocks/image?repo=unjs/packageName" />
+<a href="https://github.com/Cubelrti/utf8-decoder/graphs/contributors">
+<img src="https://contrib.rocks/image?repo=Cubelrti/utf8-decoder" />
 </a>
 
 <!-- /automd -->

@@ -1,8 +1,8 @@
 {
-  "name": "packageName",
-  "version": "0.0.0",
+  "name": "utf8-decoder",
+  "version": "1.0.0",
   "description": "",
-  "repository": "unjs/packageName",
+  "repository": "Cubelrti/utf8-decoder",
   "license": "MIT",
   "sideEffects": false,
   "type": "module",
@@ -22,17 +22,19 @@
   "scripts": {
     "build": "unbuild",
     "dev": "vitest dev",
-    "lint": "eslint --cache --ext .ts,.js,.mjs,.cjs . && prettier -c src test",
+    "lint": "eslint --cache --ext .ts,.js,.mjs,.cjs .",
     "lint:fix": "automd && eslint --cache --ext .ts,.js,.mjs,.cjs . --fix && prettier -c src test -w",
     "prepack": "pnpm build",
     "play": "jiti playground",
     "release": "pnpm test && changelogen --release && npm publish && git push --follow-tags",
     "test": "pnpm lint && pnpm test:types && vitest run --coverage",
+    "vitest": "vitest run",
     "test:types": "tsc --noEmit --skipLibCheck"
   },
   "devDependencies": {
     "@types/node": "^20.11.30",
     "@vitest/coverage-v8": "^1.4.0",
+    "@vitest/ui": "^1.6.0",
     "automd": "^0.3.6",
     "changelogen": "^0.5.5",
     "eslint": "^8.57.0",
@@ -43,5 +45,8 @@
     "unbuild": "^2.0.0",
     "vitest": "^1.4.0"
   },
-  "packageManager": "pnpm@8.12.1"
+  "packageManager": "pnpm@8.12.1",
+  "dependencies": {
+    "iconv-lite": "^0.6.3"
+  }
 }
