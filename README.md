@@ -11,8 +11,9 @@ A simple UTF-8 decoder, keeping align with native TextDecoder as much as possibl
 
 Most part of the code is using V8's Utf8DfaDecoder, which is a modified version of [Flexible and Economical UTF-8 Decoder](http://bjoern.hoehrmann.de/utf-8/decoder/dfa/).
 
-- Handle malformed UTF-8 better than most solutions on NPM. 100% aligned with the standard.
-- Keeps default char unicode `�` as-is instead of throwing error.
+- Handle malformed UTF-8 better than most solutions.
+- Produce same output as the Node's TextDecoder.
+- Keep default char unicode `�` as-is instead of throwing error.
 - Process surrogate pairs correctly for Emojis.
 - Designed with performance in mind.
 

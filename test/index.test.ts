@@ -14,6 +14,18 @@ const testCases = [
   "✊🏿✊🏿✊🏿👶👶👶🏿👶🏿🏋️‍♀️🏋️‍♀️🏋️‍♀️",
   // special cases
   "𐐀",
+  '',
+  'ascii',
+  'latin \u00A9 1',
+  'two \uCCCC byte',
+  'surrogate \uD800\uDC000 pair',
+  'isolated \uD800 leading',
+  'isolated \uDC00 trailing',
+  '\uD800 isolated leading at beginning',
+  '\uDC00 isolated trailing at beginning',
+  'isolated leading at end \uD800',
+  'isolated trailing at end \uDC00',
+  'swapped surrogate \uDC00\uD800 pair'
 ];
 
 const invalidTestCases = [
@@ -33,9 +45,11 @@ describe("utf8 decoder", () => {
   for (const testCase of testCases) {
     it(`decode ${testCase} successfully`, () => {
       const textEncoder = new TextEncoder();
+      const textDecoder = new TextDecoder();
       const encoded = textEncoder.encode(testCase);
+      const expected = textDecoder.decode(encoded);
       const decoded = decode(encoded);
-      expect(decoded).toBe(testCase);
+      expect(expected).toBe(decoded);
     });
   }
   it("decode invalid utf-8 sequence", () => {
