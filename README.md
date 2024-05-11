@@ -9,7 +9,7 @@
 
 A simple UTF-8 decoder, keeping align with native TextDecoder as much as possible.
 
-Most part of the code is using V8's Utf8DfaDecoder, which is a modified version of [Flexible and Economical UTF-8 Decoder](http://bjoern.hoehrmann.de/utf-8/decoder/dfa/).
+Most part of the code is modified from V8's [Utf8DfaDecoder](https://chromium.googlesource.com/v8/v8/+/b80a03bcdf472910eade60f4bc4154fe19aae224/src/third_party/utf8-decoder/utf8-decoder.h), which is a modified version of [Flexible and Economical UTF-8 Decoder](http://bjoern.hoehrmann.de/utf-8/decoder/dfa/).
 
 - Handle malformed UTF-8 better than most solutions.
 - Produce same output as the Node's TextDecoder.
