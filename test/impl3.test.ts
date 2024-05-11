@@ -1,6 +1,8 @@
 import { readFileSync } from "node:fs";
 import { expect, it, describe } from "vitest";
-import { decode } from "../src";
+// import { decode } from "../src";
+import fsted from './libs/fsted'
+const decode = fsted.decode
 const testCases = [
   // 1-byte
   "abcdefghABCDEFGH12345678abcdefghABCDEFGH12345678abcdefghABCDEFGH",

@@ -1,6 +1,8 @@
 import { readFileSync } from "node:fs";
 import { expect, it, describe } from "vitest";
-import { decode } from "../src";
+// import { decode } from "../src";
+import { Utf8ArrayToString2 } from "./libs/impl2";
+const decode = Utf8ArrayToString2;
 const testCases = [
   // 1-byte
   "abcdefghABCDEFGH12345678abcdefghABCDEFGH12345678abcdefghABCDEFGH",
