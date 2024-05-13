@@ -22,7 +22,7 @@
   "scripts": {
     "build": "unbuild",
     "dev": "vitest dev",
-    "lint": "eslint --cache --ext .ts,.js,.mjs,.cjs .",
+    "lint": "eslint --cache --ext .ts,.js,.mjs,.cjs src",
     "lint:fix": "automd && eslint --cache --ext .ts,.js,.mjs,.cjs src --fix",
     "prepack": "pnpm build",
     "play": "jiti playground",
