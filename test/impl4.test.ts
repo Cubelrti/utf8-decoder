@@ -86,7 +86,7 @@ const tests = [
       "%fc",
       "%fd",
     ],
-    expected: "ABC\ufffdXYZ",
+    expected: "ABC\uFFFDXYZ",
   },
 
   {
@@ -94,7 +94,7 @@ const tests = [
       "%c0%af", // Illegal bytes in 2-octet
       "%c1%af",
     ], //  sequences
-    expected: "ABC\ufffd\ufffdXYZ",
+    expected: "ABC\uFFFD\uFFFDXYZ",
   },
 
   {
@@ -111,7 +111,7 @@ const tests = [
       "%ed%be%80", // DF80
       "%ed%bf%bf",
     ], // DFFF
-    expected: "ABC\ufffd\ufffd\ufffdXYZ",
+    expected: "ABC\uFFFD\uFFFD\uFFFDXYZ",
   },
 
   {
@@ -124,7 +124,7 @@ const tests = [
       "%f5%80%80%80",
       "%f7%bf%bf%bf",
     ],
-    expected: "ABC\ufffd\ufffd\ufffd\ufffdXYZ",
+    expected: "ABC\uFFFD\uFFFD\uFFFD\uFFFDXYZ",
   },
 
   {
@@ -133,7 +133,7 @@ const tests = [
       "%f8%80%80%80%af", //  sequences
       "%fb%bf%bf%bf%bf",
     ],
-    expected: "ABC\ufffd\ufffd\ufffd\ufffd\ufffdXYZ",
+    expected: "ABC\uFFFD\uFFFD\uFFFD\uFFFD\uFFFDXYZ",
   },
 
   // Surrogate pairs
@@ -151,7 +151,7 @@ const tests = [
       "%fc%80%80%80%80%af", //  sequences
       "%fd%bf%bf%bf%bf%bf",
     ],
-    expected: "ABC\ufffd\ufffd\ufffd\ufffd\ufffd\ufffdXYZ",
+    expected: "ABC\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\uFFFDXYZ",
   },
 ];
 

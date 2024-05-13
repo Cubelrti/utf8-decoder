@@ -1,8 +1,10 @@
 import { readFileSync } from "node:fs";
 import { expect, it, describe } from "vitest";
 // import { decode } from "../src";
-import { Utf8ArrayToString2 } from "./libs/impl2";
-const decode = Utf8ArrayToString2;
+const TextEncoding = require('text-encoding')
+// console.log(TextEncoding)
+const decoder = new TextEncoding.TextDecoder('utf-8')
+const decode = decoder.decode.bind(decoder)
 const testCases = [
   // 1-byte
   "abcdefghABCDEFGH12345678abcdefghABCDEFGH12345678abcdefghABCDEFGH",

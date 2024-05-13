@@ -1,15 +1,15 @@
 export const Utf8ArrayToStr = (function () {
-  let charCache = new Array(128)  // Preallocate the cache for the common single byte chars
-  let charFromCodePt = String.fromCodePoint || String.fromCharCode
-  let result: any[] = []
+  const charCache = Array.from({ length: 128 })  // Preallocate the cache for the common single byte chars
+  const charFromCodePt = String.fromCodePoint || String.fromCharCode
+  const result: any[] = []
 
   return function (array: Uint8Array) {
-    var codePt, byte1
-    var buffLen = array.length
+    let codePt, byte1
+    const buffLen = array.length
 
     result.length = 0
 
-    for (var i = 0; i < buffLen;) {
+    for (let i = 0; i < buffLen;) {
       byte1 = array[i++]
 
       if (byte1 <= 0x7F) {

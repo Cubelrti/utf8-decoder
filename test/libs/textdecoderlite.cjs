@@ -1,7 +1,5 @@
-function TextEncoderLite() {
-}
-function TextDecoderLite() {
-}
+function TextEncoderLite() {}
+function TextDecoderLite() {}
 
 (function () {
 'use strict';
@@ -10,40 +8,40 @@ function TextDecoderLite() {
 // Thanks Feross et al! :-)
 
 function utf8ToBytes (string, units) {
-  units = units || Infinity
-  var codePoint
-  var length = string.length
-  var leadSurrogate = null
-  var bytes = []
-  var i = 0
+  units = units || Number.POSITIVE_INFINITY
+  let codePoint
+  const length = string.length
+  let leadSurrogate = null
+  const bytes = []
+  let i = 0
 
   for (; i < length; i++) {
     codePoint = string.charCodeAt(i)
 
     // is surrogate component
-    if (codePoint > 0xD7FF && codePoint < 0xE000) {
+    if (codePoint > 0xD7_FF && codePoint < 0xE0_00) {
       // last char was a lead
       if (leadSurrogate) {
         // 2 leads in a row
-        if (codePoint < 0xDC00) {
-          if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+        if (codePoint < 0xDC_00) {
+          if ((units -= 3) > -1) { bytes.push(0xEF, 0xBF, 0xBD) }
           leadSurrogate = codePoint
           continue
         } else {
           // valid surrogate pair
-          codePoint = leadSurrogate - 0xD800 << 10 | codePoint - 0xDC00 | 0x10000
+          codePoint = leadSurrogate - 0xD8_00 << 10 | codePoint - 0xDC_00 | 0x1_00_00
           leadSurrogate = null
         }
       } else {
         // no lead yet
 
-        if (codePoint > 0xDBFF) {
+        if (codePoint > 0xDB_FF) {
           // unexpected trail
-          if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+          if ((units -= 3) > -1) { bytes.push(0xEF, 0xBF, 0xBD) }
           continue
         } else if (i + 1 === length) {
           // unpaired lead
-          if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+          if ((units -= 3) > -1) { bytes.push(0xEF, 0xBF, 0xBD) }
           continue
         } else {
           // valid lead
@@ -53,29 +51,29 @@ function utf8ToBytes (string, units) {
       }
     } else if (leadSurrogate) {
       // valid bmp char, but last char was a lead
-      if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+      if ((units -= 3) > -1) { bytes.push(0xEF, 0xBF, 0xBD) }
       leadSurrogate = null
     }
 
     // encode utf8
     if (codePoint < 0x80) {
-      if ((units -= 1) < 0) break
+      if ((units -= 1) < 0) { break }
       bytes.push(codePoint)
-    } else if (codePoint < 0x800) {
-      if ((units -= 2) < 0) break
+    } else if (codePoint < 0x8_00) {
+      if ((units -= 2) < 0) { break }
       bytes.push(
         codePoint >> 0x6 | 0xC0,
         codePoint & 0x3F | 0x80
       )
-    } else if (codePoint < 0x10000) {
-      if ((units -= 3) < 0) break
+    } else if (codePoint < 0x1_00_00) {
+      if ((units -= 3) < 0) { break }
       bytes.push(
         codePoint >> 0xC | 0xE0,
         codePoint >> 0x6 & 0x3F | 0x80,
         codePoint & 0x3F | 0x80
       )
-    } else if (codePoint < 0x200000) {
-      if ((units -= 4) < 0) break
+    } else if (codePoint < 0x20_00_00) {
+      if ((units -= 4) < 0) { break }
       bytes.push(
         codePoint >> 0x12 | 0xF0,
         codePoint >> 0xC & 0x3F | 0x80,
@@ -91,12 +89,12 @@ function utf8ToBytes (string, units) {
 }
 
 function utf8Slice (buf, start, end) {
-  var res = ''
-  var tmp = ''
-  end = Math.min(buf.length, end || Infinity)
+  let res = ''
+  let tmp = ''
+  end = Math.min(buf.length, end || Number.POSITIVE_INFINITY)
   start = start || 0;
 
-  for (var i = start; i < end; i++) {
+  for (let i = start; i < end; i++) {
     if (buf[i] <= 0x7F) {
       res += decodeUtf8Char(tmp) + String.fromCharCode(buf[i])
       tmp = ''
@@ -111,19 +109,15 @@ function utf8Slice (buf, start, end) {
 function decodeUtf8Char (str) {
   try {
     return decodeURIComponent(str)
-  } catch (err) {
-    return String.fromCharCode(0xFFFD) // UTF 8 invalid char
+  } catch {
+    return String.fromCharCode(0xFF_FD) // UTF 8 invalid char
   }
 }
 
 TextEncoderLite.prototype.encode = function (str) {
-  var result;
+  let result;
 
-  if ('undefined' === typeof Uint8Array) {
-    result = utf8ToBytes(str);
-  } else {
-    result = new Uint8Array(utf8ToBytes(str));
-  }
+  result = typeof Uint8Array === 'undefined' ? utf8ToBytes(str) : new Uint8Array(utf8ToBytes(str));
 
   return result;
 };
@@ -131,7 +125,5 @@ TextEncoderLite.prototype.encode = function (str) {
 TextDecoderLite.prototype.decode = function (bytes) {
   return utf8Slice(bytes, 0, bytes.length);
 }
-
-
 }());
 module.exports = TextDecoderLite;

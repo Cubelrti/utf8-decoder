@@ -2,8 +2,8 @@
 
 <!-- automd:badges color=yellow -->
 
-[![npm version](https://img.shields.io/npm/v/utf8-decoder?color=yellow)](https://npmjs.com/package/utf8-decoder)
-[![npm downloads](https://img.shields.io/npm/dm/utf8-decoder?color=yellow)](https://npmjs.com/package/utf8-decoder)
+[![npm version](https://flat.badgen.net/npm/v/utf8-decoder?color=yellow)](https://npmjs.com/package/utf8-decoder)
+[![npm downloads](https://flat.badgen.net/npm/dm/utf8-decoder?color=yellow)](https://npmjs.com/package/utf8-decoder)
 
 <!-- /automd -->
 
