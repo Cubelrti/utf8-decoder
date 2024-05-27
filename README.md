@@ -15,7 +15,7 @@ Most part of the code is modified from V8's [Utf8DfaDecoder](https://chromium.go
 - Produce same output as the Node's TextDecoder.
 - Keep default char unicode `�` as-is instead of throwing error.
 - Process surrogate pairs correctly for Emojis.
-- Designed with performance in mind.
+- Designed with performance in mind. Provide comparable performance to native TextDecoder.
 
 You can try over the test case for other UTF-8 decoders to see the difference, especially the malformed cases.
 
