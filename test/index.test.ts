@@ -36,6 +36,7 @@ const testCases = [
   "surrogate \u00ED\u00A0\u0080\u00ED\u00B0\u0080 pair",
 ];
 
+// test cases from UTF-8 specification
 const invalidTestCases = [
   [0x54, 0x78, 0x01, 0xb5, 0xcf, 0x03, 0x8c],
   [0xe8, 0x82, 0xda, 0x46, 0x5c, 0xdb, 0xb6],
@@ -44,6 +45,8 @@ const invalidTestCases = [
     0x64,
   ],
 ];
+
+// some test cases from Mozilla's UTF-8 decoder test suite
 const tests = [
   {
     inStrings: [

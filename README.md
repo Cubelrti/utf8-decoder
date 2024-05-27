@@ -91,6 +91,12 @@ Unicode/UTF-8 is a complex topic, here are some references for further reading:
 
 I recommend reading the chapter 3 of the Unicode Standard for a better understanding of the encoding and the invalid sequences and error handling.
 
+This project is highly inspired by the following projects:
+- [V8's Utf8DfaDecoder](https://chromium.googlesource.com/v8/v8/+/b80a03bcdf472910eade60f4bc4154fe19aae224/src/third_party/utf8-decoder/utf8-decoder.h)
+- [Flexible and Economical UTF-8 Decoder](http://bjoern.hoehrmann.de/utf-8/decoder/dfa/)
+- [TextDecoder](https://github.com/EvanBacon/text-decoder)
+- [TextEncoding](https://github.com/inexorabletash/text-encoding)
+
 ## License
 
 <!-- automd:contributors license=MIT -->
