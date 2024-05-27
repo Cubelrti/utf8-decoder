@@ -379,3 +379,9 @@ export class UTF8DfaDecoder implements Decoder {
     return null;
   }
 }
+
+// static `decode` function for convenience and API consistency
+export function decode(input: ArrayBuffer | DataView, encoding = "utf-8"): string {
+  const decoder = new TextDecoder(encoding);
+  return decoder.decode(input);
+}
