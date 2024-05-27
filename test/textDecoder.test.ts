@@ -1,8 +1,7 @@
 /* eslint-disable */
 import { readFileSync } from "node:fs";
 import { expect, it, describe } from "vitest";
-import { decode } from "../src";
-import { TextDecoder } from "../src/decoder";
+import { TextDecoder } from "../src/index";
 describe("TextDecoder", () => {
   // https://github.com/inexorabletash/text-encoding/blob/3f330964c0e97e1ed344c2a3e963f4598610a7ad/test/test-misc.js#L34C1-L47C18
   it(`has expected attributes`, () => {

@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { expect, it, describe } from "vitest";
-import { TextDecoder } from "../src/decoder";
+import { TextDecoder } from "../src/index";
 const textDecoder = new TextDecoder();
 const decode = textDecoder.decode.bind(textDecoder);
 const testCases = [
