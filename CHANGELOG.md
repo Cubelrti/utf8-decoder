@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.2.0
+
+[compare changes](https://github.com/Cubelrti/utf8-decoder/compare/v1.1.0...v1.2.0)
+
+### 🚀 Enhancements
+
+- Add back decode function ([ead1123](https://github.com/Cubelrti/utf8-decoder/commit/ead1123))
+
+### ❤️ Contributors
+
+- Haotianlong <haotianlong@tencent.com>
+
 ## v1.1.0
 
 
