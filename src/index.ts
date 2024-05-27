@@ -11,18 +11,6 @@
 //
 // https://github.com/inexorabletash/text-encoding/blob/3f330964c0e97e1ed344c2a3e963f4598610a7ad/lib/encoding.js#L1
 
-
-/**
- * Checks if a number is within a specified range.
- * @param {number} a The number to test.
- * @param {number} min The minimum value in the range, inclusive.
- * @param {number} max The maximum value in the range, inclusive.
- * @returns {boolean} True if a is within the range.
- */
-function inRange(a: number, min: number, max: number): boolean {
-  return min <= a && a <= max;
-}
-
 /**
  * Converts an array of code points to a string.
  * @param {number[]} codePoints Array of code points.
@@ -69,19 +57,19 @@ const FINISHED = -1;
  * @param {!(number[]|Uint8Array)} tokens Array of tokens that provide the stream.
  */
 export class Stream {
-  private tokens: number[];
+  private tokens: Uint8Array;
+  private cursor: number;
 
   constructor(tokens: number[] | Uint8Array) {
-    this.tokens = Array.prototype.slice.call(tokens);
-    // Reversed as push/pop is more efficient than shift/unshift.
-    this.tokens.reverse();
+    this.tokens = Uint8Array.from(tokens);
+    this.cursor = 0;
   }
-
   /**
    * @return {boolean} True if end-of-stream has been hit.
    */
+
   endOfStream(): boolean {
-    return this.tokens.length === 0;
+    return this.cursor >= this.tokens.length;
   }
 
   /**
@@ -93,38 +81,10 @@ export class Stream {
    * end_of_stream.
    */
   read(): number {
-    if (this.tokens.length === 0) { return END_OF_STREAM; }
-    return this.tokens.pop()!;
-  }
-
-  /**
-   * When one or more tokens are prepended to a stream, those tokens
-   * must be inserted, in given order, before the first token in the
-   * stream.
-   *
-   * @param token The token(s) to prepend to the stream.
-   */
-  prepend(token: number | number[]): void {
-    if (Array.isArray(token)) {
-      while (token.length > 0) { this.tokens.push(token.pop()!); }
-    } else {
-      this.tokens.push(token);
-    }
-  }
-
-  /**
-   * When one or more tokens are pushed to a stream, those tokens
-   * must be inserted, in given order, after the last token in the
-   * stream.
-   *
-   * @param token The tokens(s) to push to the stream.
-   */
-  push(token: number | number[]): void {
-    if (Array.isArray(token)) {
-      while (token.length > 0) { this.tokens.unshift(token.shift()!); }
-    } else {
-      this.tokens.unshift(token);
-    }
+    // if (this.tokens.length === 0) { return END_OF_STREAM; }
+    // return this.tokens.pop()!;
+    if (this.cursor >= this.tokens.length) { return END_OF_STREAM; }
+    return this.tokens[this.cursor++];
   }
 }
 
