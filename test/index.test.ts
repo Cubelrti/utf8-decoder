@@ -1,8 +1,8 @@
 import { readFileSync } from "node:fs";
 import { expect, it, describe } from "vitest";
-import { TextDecoder } from "../src/index";
-const textDecoder = new TextDecoder();
-const decode = textDecoder.decode.bind(textDecoder);
+import { decode } from "../src/index";
+// const textDecoder = new Utf8Decoder();
+// const decode = textDecoder.decode.bind(textDecoder);
 const testCases = [
   // 1-byte
   "abcdefghABCDEFGH12345678abcdefghABCDEFGH12345678abcdefghABCDEFGH",
@@ -199,6 +199,7 @@ describe("utf8 decoder", () => {
     it(`decode invalid utf-8 sequence ${++caseIndex}`, () => {
       const invalid = new Uint8Array(invalidTestCase);
       const decoded = decode(invalid);
+      // const v1Decoded = V1Decode(invalid);
       const textDecoder = new TextDecoder("utf8");
       const expected = textDecoder.decode(invalid);
       // console.log(decoded);

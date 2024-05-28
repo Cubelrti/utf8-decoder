@@ -86,6 +86,10 @@ export class Stream {
     if (this.cursor >= this.tokens.length) { return END_OF_STREAM; }
     return this.tokens[this.cursor++];
   }
+
+  backward(): void {
+    this.cursor--;
+  }
 }
 
 export function decoderError(fatal: boolean, optCodePoint?: number) {
@@ -140,6 +144,7 @@ const DECODERS: {
 
 export interface Decoder {
   handler: (bite: number) => number | number[] | null | -1;
+  continue: boolean
 }
 
 // 8.1 Interface TextDecoder
@@ -227,13 +232,15 @@ export class TextDecoder {
       const token = inputStream.read();
 
       if (token === END_OF_STREAM) { break; }
-
       const result = this._decoder!.handler(token);
-
       if (result === FINISHED) { break; }
-
       if (result !== null) {
         output.push(result as number);
+      }
+      if (this._decoder!.continue) {
+        inputStream.backward();
+        this._decoder!.continue = false;
+        continue;
       }
     }
 
@@ -312,6 +319,7 @@ export class UTF8DfaDecoder implements Decoder {
   private current = 0;
   // eslint-disable-next-line no-useless-constructor
   constructor(private options: { fatal: boolean }) {}
+  public continue = false;
 
   handler(bite: number) {
     if (bite === -1 && this.state !== 12) {
@@ -323,12 +331,17 @@ export class UTF8DfaDecoder implements Decoder {
     if (bite < 0x7f && this.state === 12) {
       return bite;
     }
+    const previousState = this.state;
+
     const type = utf8d[bite];
     this.state = utf8d[256 + this.state + type];
     this.current = (this.current << 6) | (bite & (0x7f >> (type >> 1)));
     if (this.state < 12) {
       this.state = 12;
       this.current = 0;
+      if (previousState !== 12) {
+        this.continue = true;
+      }
       return decoderError(this.options.fatal);
     } else if (this.state === 12) {
       const res = this.current
