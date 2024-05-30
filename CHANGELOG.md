@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.2.2
+
+[compare changes](https://github.com/Cubelrti/utf8-decoder/compare/v1.2.1...v1.2.2)
+
+### 🩹 Fixes
+
+- Remove unused dependencies ([0b620f9](https://github.com/Cubelrti/utf8-decoder/commit/0b620f9))
+
+### ❤️ Contributors
+
+- Haotianlong <haotianlong@tencent.com>
+
 ## v1.2.1
 
 [compare changes](https://github.com/Cubelrti/utf8-decoder/compare/v1.2.0...v1.2.1)
