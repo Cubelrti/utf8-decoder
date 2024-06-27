@@ -16,11 +16,15 @@
  * @param {number[]} codePoints Array of code points.
  * @returns {string} The string representation.
  */
+const codePointCache = Array.from({ length: 0xff_ff }, (_, i) =>
+  String.fromCharCode(i),
+);
+
 function codePointsToString(codePoints: number[]): string {
   let s = "";
   for (let cp of codePoints) {
     if (cp <= 0xff_ff) {
-      s += String.fromCharCode(cp);
+      s += codePointCache[cp];
     } else {
       cp -= 0x1_00_00;
       s += String.fromCharCode((cp >> 10) + 0xd8_00, (cp & 0x3_ff) + 0xdc_00);
@@ -83,7 +87,9 @@ export class Stream {
   read(): number {
     // if (this.tokens.length === 0) { return END_OF_STREAM; }
     // return this.tokens.pop()!;
-    if (this.cursor >= this.tokens.length) { return END_OF_STREAM; }
+    if (this.cursor >= this.tokens.length) {
+      return END_OF_STREAM;
+    }
     return this.tokens[this.cursor++];
   }
 
@@ -93,7 +99,9 @@ export class Stream {
 }
 
 export function decoderError(fatal: boolean, optCodePoint?: number) {
-  if (fatal) { throw new TypeError("Decoder error"); }
+  if (fatal) {
+    throw new TypeError("Decoder error");
+  }
   return optCodePoint || 0xff_fd;
 }
 
@@ -144,7 +152,7 @@ const DECODERS: {
 
 export interface Decoder {
   handler: (bite: number) => number | number[] | null | -1;
-  continue: boolean
+  continue: boolean;
 }
 
 // 8.1 Interface TextDecoder
@@ -162,12 +170,12 @@ export class TextDecoder {
     options: {
       fatal?: boolean;
       ignoreBOM?: boolean;
-    } = {}
+    } = {},
   ) {
     // eslint-disable-next-line eqeqeq
     if (options != undefined && typeof options !== "object") {
       throw new TypeError(
-        "Second argument of TextDecoder must be undefined or an object, e.g. { fatal: true }"
+        "Second argument of TextDecoder must be undefined or an object, e.g. { fatal: true }",
       );
     }
 
@@ -175,7 +183,7 @@ export class TextDecoder {
     const encoding = getEncoding(normalizedLabel);
     if (encoding === null || encoding.name === "replacement") {
       throw new RangeError(
-        `Unknown encoding: ${label} (normalized: ${normalizedLabel})`
+        `Unknown encoding: ${label} (normalized: ${normalizedLabel})`,
       );
     }
 
@@ -203,7 +211,7 @@ export class TextDecoder {
 
   decode(
     input?: ArrayBuffer | DataView,
-    options: { stream?: boolean } = {}
+    options: { stream?: boolean } = {},
   ): string {
     const bytes = normalizeBytes(input);
 
@@ -231,9 +239,13 @@ export class TextDecoder {
     while (true) {
       const token = inputStream.read();
 
-      if (token === END_OF_STREAM) { break; }
+      if (token === END_OF_STREAM) {
+        break;
+      }
       const result = this._decoder!.handler(token);
-      if (result === FINISHED) { break; }
+      if (result === FINISHED) {
+        break;
+      }
       if (result !== null) {
         output.push(result as number);
       }
@@ -246,14 +258,19 @@ export class TextDecoder {
 
     if (!this._doNotFlush) {
       do {
-        const result = this._decoder!.handler(
-          inputStream.read()
-        );
-        if (result === FINISHED) { break; }
-        if (result === null) { continue; }
+        const result = this._decoder!.handler(inputStream.read());
+        if (result === FINISHED) {
+          break;
+        }
+        if (result === null) {
+          continue;
+        }
         // eslint-disable-next-line prefer-spread
-        if (Array.isArray(result)) { output.push.apply(output, result); }
-        else { output.push(result); }
+        if (Array.isArray(result)) {
+          output.push.apply(output, result);
+        } else {
+          output.push(result);
+        }
       } while (!inputStream.endOfStream());
       this._decoder = null;
     }
@@ -336,17 +353,17 @@ export class UTF8DfaDecoder implements Decoder {
     const type = utf8d[bite];
     this.state = utf8d[256 + this.state + type];
     this.current = (this.current << 6) | (bite & (0x7f >> (type >> 1)));
-    if (this.state < 12) {
+    if (this.state === 12) {
+      const res = this.current;
+      this.current = 0;
+      return res;
+    } else if (this.state < 12) {
       this.state = 12;
       this.current = 0;
       if (previousState !== 12) {
         this.continue = true;
       }
       return decoderError(this.options.fatal);
-    } else if (this.state === 12) {
-      const res = this.current
-      this.current = 0;
-      return res;
     }
     // eslint-disable-next-line unicorn/no-null
     return null;

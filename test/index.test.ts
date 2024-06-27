@@ -213,14 +213,13 @@ describe("utf8 decoder", () => {
         .split("%")
         .slice(1)
         .map((hex) => Number.parseInt(hex, 16));
-      fullString.push(...encoded);
+      fullString.push(65, 66, 67, ...encoded, 88, 89, 90);
     }
     it(`decode invalid utf-8 sequence ${test.expected}`, () => {
       const invalid = new Uint8Array(fullString);
       const decoded = decode(invalid);
       const textDecoder = new TextDecoder("utf8");
       const expected = textDecoder.decode(invalid);
-      // console.log(decoded);
       expect(expected).toBe(decoded);
     });
   }
