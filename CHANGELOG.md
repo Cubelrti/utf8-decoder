@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v1.3.0
+
+[compare changes](https://github.com/Cubelrti/utf8-decoder/compare/v1.2.2...v1.3.0)
+
+### 🚀 Enhancements
+
+- Optimize performance by cache ([c2346aa](https://github.com/Cubelrti/utf8-decoder/commit/c2346aa))
+
+### 🩹 Fixes
+
+- Remove unused dependencies ([0b620f9](https://github.com/Cubelrti/utf8-decoder/commit/0b620f9))
+
+### 🏡 Chore
+
+- **release:** V1.2.2 ([b0e9439](https://github.com/Cubelrti/utf8-decoder/commit/b0e9439))
+
+### ❤️ Contributors
+
+- Haotianlong <haotianlong@tencent.com>
+
 ## v1.2.2
 
 [compare changes](https://github.com/Cubelrti/utf8-decoder/compare/v1.2.1...v1.2.2)
